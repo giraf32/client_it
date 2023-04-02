@@ -1,15 +1,16 @@
-
 import 'package:client_it/app/domain/app_api.dart';
 import 'package:client_it/feature/auth/data/dto/user_dto.dart';
 import 'package:client_it/feature/auth/domain/auth_repository.dart';
 import 'package:client_it/feature/auth/domain/entities/user_entity/user_entity.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: AuthRepository)
 class NetworkAutRepository implements AuthRepository {
   final AppApi api;
- // ответы от сервера преобразуем в json / создания UserEntity
+
+  // ответы от сервера преобразуем в json / создания UserEntity
   NetworkAutRepository(this.api);
 
   @override
@@ -27,17 +28,21 @@ class NetworkAutRepository implements AuthRepository {
   Future<String> passwordUpdate(
       {required String oldPassword, required String newPassword}) async {
     try {
-      final Response response = await api.passwordUpdate(oldPassword: oldPassword, newPassword: newPassword);
+      final Response response = await api.passwordUpdate(
+          oldPassword: oldPassword, newPassword: newPassword);
+        debugPrint("debug == $response");
+        final response2 = response.data ;
+      debugPrint("debug2 == $response2");
       return response.data['message'];
     } catch (_) {
       rethrow;
     }
-     }
+  }
 
   @override
   Future<UserEntity> refreshToken({String? refreshToken}) async {
     try {
-      final response = await api.refreshToken(refreshToken:refreshToken);
+      final response = await api.refreshToken(refreshToken: refreshToken);
       return UserDto.fromJson(response.data['data']).toEntity();
     } catch (_) {
       rethrow;
@@ -47,10 +52,8 @@ class NetworkAutRepository implements AuthRepository {
   @override
   Future<UserEntity> signIn(
       {required String password, required String username}) async {
-
     try {
       final response = await api.signIn(password: password, username: username);
-
       return UserDto.fromJson(response.data['data']).toEntity();
     } catch (_) {
       rethrow;
@@ -63,7 +66,8 @@ class NetworkAutRepository implements AuthRepository {
       required String username,
       required String email}) async {
     try {
-      final response = await api.signUp(password: password, username: username, email: email);
+      final response = await api.signUp(
+          password: password, username: username, email: email);
       return UserDto.fromJson(response.data['data']).toEntity();
     } catch (_) {
       rethrow;

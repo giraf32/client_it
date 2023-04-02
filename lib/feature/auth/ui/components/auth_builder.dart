@@ -36,11 +36,10 @@ class AuthBuilder extends StatelessWidget {
             )),
         listener: (context, state) {
           state.whenOrNull(
-            error: (error) =>
-                AppSnackBar.showSnackBarWithError(context, ErrorEntity.fromException(error)),
+            error: (error) => AppSnackBar.showSnackBarWithError(
+                context, ErrorEntity.fromException(error)),
           );
+          // debugPrint(error);
         });
   }
-
-
 }

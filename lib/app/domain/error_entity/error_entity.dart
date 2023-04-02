@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 class ErrorEntity {
-  final String message;
+  final String? message;
   final String? errorMessage;
   final dynamic error;
   final StackTrace? stackTrace;
@@ -13,15 +13,19 @@ class ErrorEntity {
     this.stackTrace,
   });
 
-  factory ErrorEntity.fromException(dynamic error){
+  factory ErrorEntity.fromException(dynamic error) {
     if (error is ErrorEntity) return error;
+    //final entity = ErrorEntity(message: 'NOT ERROR');
     final entity = ErrorEntity(message: 'Неизвестная ошибка');
+
     if (error is DioError) {
       try {
-        return ErrorEntity(message: error.response?.data['message'],
+        return ErrorEntity(
+            message: error.response?.data["message"] ?? 'Неизвестная ошибка1',
             stackTrace: error.stackTrace,
             error: error,
-            errorMessage: error.response?.data['error'] ?? 'Неизвестная ошибка');
+            errorMessage:
+                error.response?.data['error'] ?? 'Неизвестная ошибка2');
       } catch (_) {
         return entity;
       }

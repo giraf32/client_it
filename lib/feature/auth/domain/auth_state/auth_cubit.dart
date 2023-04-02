@@ -112,7 +112,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
         authorized: (userEntity) => AuthState.authorized(userEntity.copyWith(
             email: newUserEntity.email, username: newUserEntity.username)),
       ));
-      _updateUserStata(const AsyncSnapshot.withData(ConnectionState.done, 'Успешное обновления данных'));
+      _updateUserStata(const AsyncSnapshot.withData(ConnectionState.done,'Успешное обновления данных'));
     } catch (error) {
       _updateUserStata(AsyncSnapshot.withError(ConnectionState.done, error));
     }
