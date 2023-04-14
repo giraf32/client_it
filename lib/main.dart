@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 
 void main() {
  WidgetsFlutterBinding.ensureInitialized();
- const app = 'prod';
- const env = String.fromEnvironment('env',defaultValue: app);
+ const env = String.fromEnvironment('env',defaultValue: 'prod');
  final runner = MainAppRunner(env);
  final builder = MainAppBuilder();
  //const String app = 'prod';
